@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<title>{% block title %}JIHO'S EBOOK{% endblock %}</title>
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "css/base.css" %}{% endblock %}" />
+<link rel="stylesheet" type="text/css" href="{% block extrastyle %}{% endblock %}" />
+
+</head>
+
+<body>
+
+<div id="header">
+    <h2 class="maintitle">JIHO'S EBOOK</h2>
+    {% if user.is_active %}
+    <h4 class="welcome">Welcome,
+                <strong>{% firstof user.get_short_name user.get_username %}</strong> /
+                <a href="{% url 'password_change' %}">Change Password</a> /
+                <a href="{% url 'logout' %}">Logout</a>
+    </h4>
+    {% else %}
+    <h4 class="welcome">Welcome, Anonymous /
+                <a href="{% url 'login' %}">Login</a> /
+                <a href="{% url 'register' %}">Register</a>
+    </h4>
+    {% endif %}
+</div>
+
+<div id="menu">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'ebook:index' %}">책 목록 및 대출 신청</a></li>
+    <li><a href="{% url 'ebook:list_check' %}">열람 가능한 책 목록</a></li>
+    <li><a href="{% url 'ebook:ebook_add' %}">책 등록</a></li>
+    <li><a href="{% url 'admin:index' %}">Admin</a></li>
+</div>
+
+
+{% block content %}{% endblock %}
+
+{% block footer %}{% endblock %}
+
+</body>
+</html>

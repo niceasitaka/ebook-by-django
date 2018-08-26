@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}books_detail.html{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "photo/photo.css" %}{% endblock %}
+
+{% block content %}
+ <div id="content">
+
+    <h2>{{ object.title }}</h2>
+   
+    <table class="photo-detail">
+    <tr>
+    <td>
+        <a href="{{ object.image.url }}">
+        <img style="max-width:100%" src="{{ object.image.url }}" />
+        </a>
+    </td>
+    
+    <td>
+    <ul>
+        <li>책 요약</li>
+        {% if object.description %}<p>{{ object.description }}</p>
+        {% else %}<p>(blank)</p>{% endif %}
+        <li>저자</li>
+        <p>{{ object.author }}</p>
+        <li>대출 신청</li>
+	<!-- post 요청으로 하려고 아래 코드들을 인터넷에서 긁어왔지만, 
+		굳이 post로 하지 않아도 될 것 같아서 주석 처리
+		<form name="myForm" action="{% url 'ebook:ebook_rent' object.id %}" method="POST">{% csrf_token %}
+		<input type="hidden" name="some_key1" value="some_value1" />
+		</form>
+		<a href="#" onclick="javascript:document.myForm.submit();">click</a>
+		-->
+      <p><a href="{% url 'ebook:ebook_rent' object.id %}">신청 하기</a></p>
+	  <!-- 기존에 object.id를 item.id로 써서 오류가 계속 발생했었음(reverse 함수에서)
+			해당 부분을 주석처리해도 오류가 계속 발생.
+			알아낸 점은 html에서 아무리 주석처리를 해도 django에서는 일단 내용을 읽는다.... -->
+   </ul>
+    </td>
+    </tr></table>
+
+</div>
+{% endblock %}

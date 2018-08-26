@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}ebook_rent_list.html{% endblock %}
+
+{% block content %}
+<div id="content">
+
+    <h1>대출한 책 목록 - {{ user }}</h1>
+    
+    <table class="change-list">
+        <tr>
+            <th>책 이름</th>
+            <th>사용자 계정</th>
+            <th>대여 반납 날짜</th>
+            <th>책 보기</th>
+        </tr>
+    
+        {% for item in object_list %}
+        <tr>
+            <td>{{ item.book }}</td>
+            <td>{{ item.user }}</td>
+            <td>{{ item.rent_end }}</td>
+            <td><a href="{% url 'ebook:ebook_content' item.id %}">GO!</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}home.html{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "css/home.css" %}{% endblock %}
+
+{% block content %}
+
+<div id="content_home">
+
+    <div id="homeimg">
+        <a href="/"><img src="{% static 'img/11.JPG' %}" style="height:256px;"/></a>
+        <h4 style="margin: 0;">JIHO'S EBOOK에 오신 것을 환영합니다.</h4>
+    </div>
+
+    <hr style="margin: 5px 0;">
+
+    <h2>이용 안내</h2>
+
+    <table id="applist">
+        <tr>
+        <td>회원 가입은 필수이며, 대출 신청 후 7일동안 책 구독이 가능합니다.</td>
+		<td>회원 가입 시, 비밀번호는 영문 + 숫자 혼합으로 생성 부탁 드립니다.</td>
+        </tr>
+    </table>
+</div>
+{% endblock content %}
+
+{% block footer %}
+<div id="footer">
+    &copy; jhlee 2018
+</div>
+{% endblock footer %}
