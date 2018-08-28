@@ -14,7 +14,8 @@ from ebook.models import Books, RentHistory
 class EbookLV(ListView):
 	model = Books
 
-# 책 등록뷰
+# 도서 등록뷰
+# 도서가 text 형식일 경우
 class EbookCVText(LoginRequiredMixin, CreateView): # 로그인 필수
 	model = Books
 	fields = ['title', 'author', 'description', 'cover_image', 'content_text']
@@ -27,16 +28,16 @@ class EbookCVText(LoginRequiredMixin, CreateView): # 로그인 필수
 		# super()에 의해 상위 클래스의 form_valid 메소드의 form.save() 실행됨(DB에 반영 후 success_url 리다이렉트)
 		
 # 책 등록뷰
+# 도서가 image(jpg, png 등) 형식일 경우
+# EbookCVText 클래스와 로직 동일
 class EbookCVImage(LoginRequiredMixin, CreateView): # 로그인 필수
 	model = Books
 	fields = ['title', 'author', 'description', 'cover_image', 'content_image']
 	template_name = 'ebook/books_image_form.html'
-	success_url = reverse_lazy('ebook:index') # form_valid 함수 진행이 성공적이면 index로 이동
+	success_url = reverse_lazy('ebook:index')
 	
-	# POST로 들어온 데이터가 유효하면 CreateView 클래스의 form_valid 메소드 호출
 	def form_valid(self, form): 
 		return super(EbookCVImage, self).form_valid(form) 
-		# super()에 의해 상위 클래스의 form_valid 메소드의 form.save() 실행됨(DB에 반영 후 success_url 리다이렉트)
 
 # 각 책들의 상세뷰
 class EbookDV(LoginRequiredMixin, DetailView):
