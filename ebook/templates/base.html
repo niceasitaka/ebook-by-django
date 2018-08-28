@@ -32,7 +32,12 @@
     <li><a href="{% url 'home' %}">Home</a></li>
     <li><a href="{% url 'ebook:index' %}">책 목록 및 대출 신청</a></li>
     <li><a href="{% url 'ebook:list_check' %}">열람 가능한 책 목록</a></li>
-    <li><a href="{% url 'ebook:ebook_add' %}">책 등록</a></li>
+	<li>책 등록&bigtriangledown;
+		<ul>
+			<li><a href="{% url 'ebook:ebook_image_add' %}">이미지 업로드</a></li>
+			<li><a href="{% url 'ebook:ebook_text_add' %}">텍스트 업로드</a></li>
+		</ul>
+    </li>
     <li><a href="{% url 'admin:index' %}">Admin</a></li>
 </div>
 

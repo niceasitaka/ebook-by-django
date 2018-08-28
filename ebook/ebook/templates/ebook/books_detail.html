@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block title %}books_detail.html{% endblock %}
-
+<!--
 {% load staticfiles %}
 {% block extrastyle %}{% static "photo/photo.css" %}{% endblock %}
-
+-->
 {% block content %}
  <div id="content">
 
@@ -13,8 +13,8 @@
     <table class="photo-detail">
     <tr>
     <td>
-        <a href="{{ object.image.url }}">
-        <img style="max-width:100%" src="{{ object.image.url }}" />
+        <a href="{{ object.cover_image.url }}">
+        <img style="max-width:100%" src="{{ object.cover_image.url }}" />
         </a>
     </td>
     

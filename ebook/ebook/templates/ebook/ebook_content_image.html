@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}ebook_content_image.html{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "ebook/ebook.css" %}{% endblock %}
+
+{% block content %}
+<div id="content_home">
+<div id="homeimg">
+
+    <img src="{{ content }}" />
+   
+</div>
+</div>
+{% endblock %}

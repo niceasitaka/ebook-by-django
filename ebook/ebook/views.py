@@ -15,15 +15,27 @@ class EbookLV(ListView):
 	model = Books
 
 # 책 등록뷰
-class EbookCV(LoginRequiredMixin, CreateView): # 로그인 필수
+class EbookCVText(LoginRequiredMixin, CreateView): # 로그인 필수
 	model = Books
-	fields = ['title', 'author', 'description', 'image', 'content']
-	template_name = 'ebook/books_form.html'
+	fields = ['title', 'author', 'description', 'cover_image', 'content_text']
+	template_name = 'ebook/books_text_form.html'
 	success_url = reverse_lazy('ebook:index') # form_valid 함수 진행이 성공적이면 index로 이동
 	
 	# POST로 들어온 데이터가 유효하면 CreateView 클래스의 form_valid 메소드 호출
 	def form_valid(self, form): 
-		return super(EbookCV, self).form_valid(form) 
+		return super(EbookCVText, self).form_valid(form) 
+		# super()에 의해 상위 클래스의 form_valid 메소드의 form.save() 실행됨(DB에 반영 후 success_url 리다이렉트)
+		
+# 책 등록뷰
+class EbookCVImage(LoginRequiredMixin, CreateView): # 로그인 필수
+	model = Books
+	fields = ['title', 'author', 'description', 'cover_image', 'content_image']
+	template_name = 'ebook/books_image_form.html'
+	success_url = reverse_lazy('ebook:index') # form_valid 함수 진행이 성공적이면 index로 이동
+	
+	# POST로 들어온 데이터가 유효하면 CreateView 클래스의 form_valid 메소드 호출
+	def form_valid(self, form): 
+		return super(EbookCVImage, self).form_valid(form) 
 		# super()에 의해 상위 클래스의 form_valid 메소드의 form.save() 실행됨(DB에 반영 후 success_url 리다이렉트)
 
 # 각 책들의 상세뷰
@@ -80,13 +92,21 @@ class EbookRentLV(LoginRequiredMixin, ListView):
 @login_required
 def ebook_content(request, pk):
 	rent = RentHistory.objects.get(id=pk)
-	# open 함수에서 arg를 받을 때는 str 형으로 변환 필요
-	file_path = str(rent.book.content)
-	# close() 함수를 쓰지 않기 위해 컨텍스트 매니저 사용 / 한 쌍으로 함께 실행되어야 하는 연결된 수행 코드를 한 번에 처리
-	with open('C:/python/django_test/ebook/media/' + file_path) as book:
-		content = book.read()
-	return render(request, 'ebook/ebook_content.html', {'content': content})
-
+	# Books 테이블의 텍스트형 도서가 업로드된 경우
+	if rent.book.content_text:
+		# open 함수에서 arg를 받을 때는 str 형으로 변환 필요
+		file_path = str(rent.book.content_text)
+		# close() 함수를 쓰지 않기 위해 컨텍스트 매니저 사용 / 한 쌍으로 함께 실행되어야 하는 연결된 수행 코드를 한 번에 처리
+		with open('C:/python/django_test/ebook/ebook/media/' + file_path) as book:
+			content = book.read()
+		return render(request, 'ebook/ebook_content.html', {'content': content})
+	# Books 테이블의 이미지형 도서가 업로드된 경우
+	else :
+		# 아래 주석과 같이 코딩할 경우, content_path 자체가 ImageFieldFile 형식으로 되어 있어 str로 리턴 불가(이미지 파일은 url 형식으로 리턴 필요)
+		#content_path = rent.book.content_image
+		#content = 'C:/python/django_test/ebook/ebook/media/' + content_path
+		content = rent.book.content_image.url
+		return render(request, 'ebook/ebook_content_image.html', {'content': content})
 
 
 
