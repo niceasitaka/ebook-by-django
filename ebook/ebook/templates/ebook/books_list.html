@@ -6,31 +6,45 @@
 {% block extrastyle %}{% static "ebook/ebook.css" %}{% endblock %}
 
 {% block content %}
+<!-- 검색 후 매칭되는 단어가 있을 경우 매칭된 내용들만 표시-->
+{% if object_list %}
+
 <div id="content">
 	<!-- view의 listview에서 object_list 가져옴 -->
     {% for item in object_list %}
 
     <div class="clear_float">
-        <h2 style="display:inline"><a href="{% url 'ebook:ebook_detail' item.id %}">{{ item.title }}</a></h2>
-        &emsp;<b><i>저자 : {{ item.author }}</i></b>
+		<!-- 썸네일 이미지는 thumb_url 에서 가져옴 -->
+		<img class="thumbnail" src="{{ item.cover_image.thumb_url }}" />
+        &emsp;<h2 style="display:inline"><a href="{% url 'ebook:ebook_detail' item.id %}">{{ item.title }}</a></h2>
+        &emsp;<b>저자 : {{ item.author }}</b>
 		<!-- &emsp;는 띄어쓰기 -->
-		&emsp;<b><i>요약 : {{ item.description }}</i></b>
+		&emsp;<b>요약 : {{ item.description }}</b>
     </div>
 
     <hr/>
+    {% endfor %}
+<!-- 검색 후 매칭되는 내용이 없을 경우 -->
+{% elif search_word %}
+<b><i>Search Word({{ search_word }}) Not Found !</i></b>
 
-    <div class="album-list">
-        {% for photo in item.books_set.all %}
-        <div class="album-list-photo">
-            <a href="{% url 'ebook:ebook_detail' item.id %}">
-            <img class="thumbnail" src="{{ books.image.thumb_url }}" />
-			<!-- DB에서 image의 thumb_url 을 가져옴 -->
-            </a>
-        </div>
-        {% endfor %}
+<!-- 처음 리스트 메뉴 클릭 시 나오는 화면 -->
+{% else %}
+    {% for item in object_list %}
+
+    <div class="clear_float">
+		<!-- 썸네일 이미지는 thumb_url 에서 가져옴 -->
+		<img class="thumbnail" src="{{ item.cover_image.thumb_url }}" />
+        &emsp;<h2 style="display:inline"><a href="{% url 'ebook:ebook_detail' item.id %}">{{ item.title }}</a></h2>
+        &emsp;<b>저자 : {{ item.author }}</b>
+		<!-- &emsp;는 띄어쓰기 -->
+		&emsp;<b>요약 : {{ item.description }}</b>
     </div>
 
+    <hr/>
     {% endfor %}
+
+{% endif %}
 
 <div>
     <span>
@@ -47,4 +61,14 @@
 </div>
 
 </div>
+
+<br/><br/>
+
+
+<form action="." method="post"> {% csrf_token %}
+	<b>{{ form }}</b>
+	<input type="submit" value="검색" />
+</form>
+
+
 {% endblock %}

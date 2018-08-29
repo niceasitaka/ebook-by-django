@@ -11,3 +11,9 @@ div#homeimg {
     padding: 5px 0 1px 0;
     text-align: center;
 }
+
+/* common */
+img.thumbnail {
+    border:3px solid #ccc;
+}
+ 

@@ -2,19 +2,42 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.http import require_POST
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
+from django.db.models import Q
 
 from datetime import timedelta, date
 
 from ebook.models import Books, RentHistory
+from ebook.forms import PostSearchForm
 
 # 전체 책 목록뷰
-class EbookLV(ListView):
+# 리스트 페이지에서 검색 기능 추가
+class EbookLV(ListView, FormView):
+	form_class = PostSearchForm # 폼으로 사용될 클래스 지정
 	model = Books
-	paginate_by = 5
-
+	paginate_by = 3 # 페이지에 개체 3개만 표시
+	
+	
+	def form_valid(self, form):
+		# POST 요청의 search_word의 파라미터 값을 추출해 schWord에 지정, search_word는 PostSearchForm에서 정의한 필드이름
+		schWord = '%s' % self.request.POST['search_word']
+		# Q 객체는 filter 메소드의 매칭 조건을 다양하게 함
+		# icontains는 대소문자를 구분하지 않고 단어가 포함되어 있는지 검사
+		# distinct는 중복 제외
+		post_list = Books.objects.filter(Q(title__icontains=schWord)|
+			Q(description__icontains=schWord)|Q(author__icontains=schWord)).distinct()
+		
+		# 템플릿에 넘겨줄 context를 사전형으로 미리 정의
+		context = {}
+		context['form'] = form
+		context['search_word'] = schWord
+		context['object_list'] = post_list
+		
+		return render(self.request, 'ebook/books_list.html', context) # No Redirection	
+	
+	
 # 도서 등록뷰
 # 도서가 text 형식일 경우
 class EbookCVText(LoginRequiredMixin, CreateView): # 로그인 필수
