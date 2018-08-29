@@ -13,6 +13,7 @@ from ebook.models import Books, RentHistory
 # 전체 책 목록뷰
 class EbookLV(ListView):
 	model = Books
+	paginate_by = 5
 
 # 도서 등록뷰
 # 도서가 text 형식일 경우
@@ -86,6 +87,7 @@ def rent_check(request):
 class EbookRentLV(LoginRequiredMixin, ListView):
 	model = RentHistory
 	template_name = 'ebook/ebook_rent_list.html'
+	paginate_by = 5
 
 	# ebook_rent_list.html 에 대출했던 사용자, 반납 상태를 고려하여 책 목록을 표시
 	def get_queryset(self):
