@@ -49,7 +49,7 @@ class EbookDV(LoginRequiredMixin, DetailView):
 
 # 책 대출을 위한 rent 함수 실행
 # DB에 데이터 삽입 진행
-# @require_POST # POST를 제외한 다른 접근에 대해서는 빈 페이지와 405코드를 반환함. 필요 시 사용 예정
+@require_POST # POST를 제외한 다른 접근에 대해서는 빈 페이지와 405코드를 반환함.
 @login_required
 def rent(request, pk):
 	# get_object_or_404을 쓰지 않은 이유 : book=pk 에 해당하는 다수 row 를 가져오지 못하기 때문

@@ -33,7 +33,12 @@
 		</form>
 		<a href="#" onclick="javascript:document.myForm.submit();">click</a>
 		-->
-      <p><a href="{% url 'ebook:ebook_rent' object.id %}">신청 하기</a></p>
+	<!-- 기존 get 방식에서 post 방식으로 변경 -->
+	<form action="{% url 'ebook:ebook_rent' object.id %}" method="post">
+		{% csrf_token %}
+		<input type="submit" value="신청 하기">
+	</form>
+     <!-- <p><a href="{% url 'ebook:ebook_rent' object.id %}">신청 하기</a></p> -->
 	  <!-- 기존에 object.id를 item.id로 써서 오류가 계속 발생했었음(reverse 함수에서)
 			해당 부분을 주석처리해도 오류가 계속 발생.
 			알아낸 점은 html에서 아무리 주석처리를 해도 django에서는 일단 내용을 읽는다.... -->
