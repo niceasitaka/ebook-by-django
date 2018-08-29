@@ -27,6 +27,15 @@ div#menu {
     font-size: 8px;
 }
 
+div#container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 500px;
+    background-color: white;
+    background: orange;
+}
+
 div#content {
     position: absolute;
     top: 70px;

@@ -39,7 +39,18 @@
 		</ul>
     </li>
     <li><a href="{% url 'admin:index' %}">Admin</a></li>
+
 </div>
+{% if messages %}
+    <div id="container">
+        {% for message in messages %}
+            <li class="alert alert-{{ message.tags }}">
+                [{{ message.tags }}]      {# 메세지 Level #}
+                {{ message.message }}   {# 실제 메세지 내용 #}
+            </li>
+        {% endfor %}
+    </div>
+{% endif %}
 
 
 {% block content %}{% endblock %}

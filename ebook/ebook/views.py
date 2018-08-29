@@ -23,7 +23,8 @@ class EbookCVText(LoginRequiredMixin, CreateView): # 로그인 필수
 	success_url = reverse_lazy('ebook:index') # form_valid 함수 진행이 성공적이면 index로 이동
 	
 	# POST로 들어온 데이터가 유효하면 CreateView 클래스의 form_valid 메소드 호출
-	def form_valid(self, form): 
+	def form_valid(self, form):
+		messages.info(self.request, '도서 등록 완료')
 		return super(EbookCVText, self).form_valid(form) 
 		# super()에 의해 상위 클래스의 form_valid 메소드의 form.save() 실행됨(DB에 반영 후 success_url 리다이렉트)
 		
@@ -36,7 +37,8 @@ class EbookCVImage(LoginRequiredMixin, CreateView): # 로그인 필수
 	template_name = 'ebook/books_image_form.html'
 	success_url = reverse_lazy('ebook:index')
 	
-	def form_valid(self, form): 
+	def form_valid(self, form):
+		messages.info(self.request, '도서 등록 완료')
 		return super(EbookCVImage, self).form_valid(form) 
 
 # 각 책들의 상세뷰
@@ -55,14 +57,14 @@ def rent(request, pk):
 	for i in rent:
 		# 사용자가 이미 대출했었고 반납되지 않은 책을 선택했을 시,
 		if i.user == request.user and i.rent_status == False:
-			#messages.info(request, '{}까지 열람 가능한 동일 도서가 있습니다.'.format(i.rent_end))
+			messages.info(request, '{}까지 열람 가능한 동일 도서가 있습니다.'.format(i.rent_end))
 			return redirect('ebook:list_check')
 	
 	rent_start = date.today()
 	rent_end = date.today() + timedelta(days=7) # 대출 기간은 7일
 	db_insert = RentHistory(rent_start=rent_start, rent_end=rent_end, rent_status=False, book_id=pk, user=request.user)
 	db_insert.save()
-
+	messages.info(request, '대여성공! 열람 가능한 기간은 {}까지 입니다.'.format(rent_end))
 	return redirect('ebook:list_check')
 
 # 대출 만료 날짜에 따라 반납 여부 결정
