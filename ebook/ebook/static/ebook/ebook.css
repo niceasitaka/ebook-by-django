@@ -17,3 +17,9 @@ img.thumbnail {
     border:3px solid #ccc;
 }
  
+div#content {
+    position: absolute;
+    top: 70px;
+    left: 50px;
+    right: 50px;
+}

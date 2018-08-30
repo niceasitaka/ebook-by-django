@@ -6,17 +6,24 @@
 {% block extrastyle %}{% static "ebook/ebook.css" %}{% endblock %}
 
 {% block content %}
-<!-- 검색 후 매칭되는 단어가 있을 경우 매칭된 내용들만 표시-->
-{% if object_list %}
+
+
 
 <div id="content">
+
+<form action="." method="post"> {% csrf_token %}
+	<b>{{ form }}</b>
+	<input type="submit" value="검색" />
+</form>
+<br/><br/>
+{% if object_list %}
 	<!-- view의 listview에서 object_list 가져옴 -->
     {% for item in object_list %}
 
     <div class="clear_float">
 		<!-- 썸네일 이미지는 thumb_url 에서 가져옴 -->
 		<img class="thumbnail" src="{{ item.cover_image.thumb_url }}" />
-        &emsp;<h2 style="display:inline"><a href="{% url 'ebook:ebook_detail' item.id %}">{{ item.title }}</a></h2>
+        &emsp;<h2><a href="{% url 'ebook:ebook_detail' item.id %}">{{ item.title }}</a></h2>
         &emsp;<b>저자 : {{ item.author }}</b>
 		<!-- &emsp;는 띄어쓰기 -->
 		&emsp;<b>요약 : {{ item.description }}</b>
@@ -24,28 +31,8 @@
 
     <hr/>
     {% endfor %}
-<!-- 검색 후 매칭되는 내용이 없을 경우 -->
-{% elif search_word %}
-<b><i>Search Word({{ search_word }}) Not Found !</i></b>
-
-<!-- 처음 리스트 메뉴 클릭 시 나오는 화면 -->
-{% else %}
-    {% for item in object_list %}
-
-    <div class="clear_float">
-		<!-- 썸네일 이미지는 thumb_url 에서 가져옴 -->
-		<img class="thumbnail" src="{{ item.cover_image.thumb_url }}" />
-        &emsp;<h2 style="display:inline"><a href="{% url 'ebook:ebook_detail' item.id %}">{{ item.title }}</a></h2>
-        &emsp;<b>저자 : {{ item.author }}</b>
-		<!-- &emsp;는 띄어쓰기 -->
-		&emsp;<b>요약 : {{ item.description }}</b>
-    </div>
-
-    <hr/>
-    {% endfor %}
-
-{% endif %}
-
+	
+<br/>
 <div>
     <span>
         {% if page_obj.has_previous %}
@@ -58,17 +45,13 @@
             <a href="?page={{ page_obj.next_page_number }}">NextPage</a>
         {% endif %}
     </span>
-</div>
-
-</div>
-
+</div>	
 <br/><br/>
+{% elif search_word %}
+<!-- 검색 후 매칭되는 내용이 없을 경우 -->
+<b><i>"{{ search_word }}" 을(를) 찾을 수 없습니다.</i></b>
 
+{% endif %}
 
-<form action="." method="post"> {% csrf_token %}
-	<b>{{ form }}</b>
-	<input type="submit" value="검색" />
-</form>
-
-
+</div>
 {% endblock %}

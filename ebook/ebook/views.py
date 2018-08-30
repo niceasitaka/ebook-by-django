@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
 from django.db.models import Q
+from django.core.paginator import Paginator, PageNotAnInteger
 
 from datetime import timedelta, date
 
@@ -18,8 +19,7 @@ class EbookLV(ListView, FormView):
 	form_class = PostSearchForm # 폼으로 사용될 클래스 지정
 	model = Books
 	paginate_by = 3 # 페이지에 개체 3개만 표시
-	
-	
+		
 	def form_valid(self, form):
 		# POST 요청의 search_word의 파라미터 값을 추출해 schWord에 지정, search_word는 PostSearchForm에서 정의한 필드이름
 		schWord = '%s' % self.request.POST['search_word']
@@ -28,7 +28,7 @@ class EbookLV(ListView, FormView):
 		# distinct는 중복 제외
 		post_list = Books.objects.filter(Q(title__icontains=schWord)|
 			Q(description__icontains=schWord)|Q(author__icontains=schWord)).distinct()
-		
+
 		# 템플릿에 넘겨줄 context를 사전형으로 미리 정의
 		context = {}
 		context['form'] = form
@@ -36,8 +36,7 @@ class EbookLV(ListView, FormView):
 		context['object_list'] = post_list
 		
 		return render(self.request, 'ebook/books_list.html', context) # No Redirection	
-	
-	
+		
 # 도서 등록뷰
 # 도서가 text 형식일 경우
 class EbookCVText(LoginRequiredMixin, CreateView): # 로그인 필수
