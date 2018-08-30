@@ -11,7 +11,7 @@
 
 <div id="content">
 
-<form action="." method="post"> {% csrf_token %}
+<form id="form" action="." method="post"> {% csrf_token %}
 	<b>{{ form }}</b>
 	<input type="submit" value="검색" />
 </form>
@@ -23,7 +23,7 @@
     <div class="clear_float">
 		<!-- 썸네일 이미지는 thumb_url 에서 가져옴 -->
 		<img class="thumbnail" src="{{ item.cover_image.thumb_url }}" />
-        &emsp;<h2><a href="{% url 'ebook:ebook_detail' item.id %}">{{ item.title }}</a></h2>
+        &emsp;<h2 style="display:inline"><a href="{% url 'ebook:ebook_detail' item.id %}">{{ item.title }}</a></h2>
         &emsp;<b>저자 : {{ item.author }}</b>
 		<!-- &emsp;는 띄어쓰기 -->
 		&emsp;<b>요약 : {{ item.description }}</b>

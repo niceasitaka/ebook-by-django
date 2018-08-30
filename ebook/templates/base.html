@@ -21,7 +21,7 @@
                 <a href="{% url 'logout' %}">Logout</a>
     </h4>
     {% else %}
-    <h4 class="welcome">Welcome, Anonymous /
+    <h4 class="welcome">안녕하세요, 방문자 님 /
                 <a href="{% url 'login' %}">Login</a> /
                 <a href="{% url 'register' %}">Register</a>
     </h4>
@@ -30,15 +30,15 @@
 
 <div id="menu">
     <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'ebook:index' %}">책 목록 및 대출 신청</a></li>
-    <li><a href="{% url 'ebook:list_check' %}">열람 가능한 책 목록</a></li>
-	<li>책 등록&bigtriangledown;
+    <li><a href="{% url 'ebook:index' %}">보유 도서 목록 / 대여 신청</a></li>
+    <li><a href="{% url 'ebook:list_check' %}">대여 도서 목록</a></li>
+	<li>도서 등록&bigtriangledown;
 		<ul>
 			<li><a href="{% url 'ebook:ebook_image_add' %}">이미지 업로드</a></li>
 			<li><a href="{% url 'ebook:ebook_text_add' %}">텍스트 업로드</a></li>
 		</ul>
     </li>
-    <li><a href="{% url 'admin:index' %}">Admin</a></li>
+    <li><a href="{% url 'admin:index' %}">관리자 페이지</a></li>
 
 </div>
 {% if messages %}

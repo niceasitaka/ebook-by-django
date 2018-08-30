@@ -3,10 +3,17 @@ div#content_home {
     top: 80px;
     left: 110px;
     right: 110px;
+	text-align: center;
 }
 
 div#homeimg {
-    background: #ddd;
+    background: white;
     padding: 5px 0 1px 0;
-    text-align: center;
+
+}
+
+table#applist {
+	position: relative;
+	margin: auto;
+	top: 455px;
 }

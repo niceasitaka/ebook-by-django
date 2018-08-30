@@ -2,8 +2,15 @@
 
 {% block title %}ebook_rent_list.html{% endblock %}
 
+{% load staticfiles %}
+{% block extrastyle %}{% static "ebook/ebook.css" %}{% endblock %}
+
 {% block content %}
-<div id="content">
+<div id="content_text">
+
+	<p>{{ title }}</p>
+	
+	<p>{{ author }}</p>
 
     <p>{{ content }}</p>
    

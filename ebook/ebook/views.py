@@ -126,7 +126,12 @@ def ebook_content(request, pk):
 		# close() 함수를 쓰지 않기 위해 컨텍스트 매니저 사용 / 한 쌍으로 함께 실행되어야 하는 연결된 수행 코드를 한 번에 처리
 		with open('C:/python/django_test/ebook/ebook/media/' + file_path) as book:
 			content = book.read()
-		return render(request, 'ebook/ebook_content.html', {'content': content})
+		
+		context = {}
+		context['content'] = content
+		context['title'] = rent.book.title
+		context['author'] = rent.book.author	
+		return render(request, 'ebook/ebook_content.html', context)
 	# Books 테이블의 이미지형 도서가 업로드된 경우
 	else :
 		# 아래 주석과 같이 코딩할 경우, content_path 자체가 ImageFieldFile 형식으로 되어 있어 str로 리턴 불가(이미지 파일은 url 형식으로 리턴 필요)

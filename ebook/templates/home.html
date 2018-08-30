@@ -10,21 +10,24 @@
 <div id="content_home">
 
     <div id="homeimg">
-        <a href="/"><img src="{% static 'img/11.JPG' %}" style="height:256px;"/></a>
+        <img src="{% static 'img/11.JPG' %}" style="height:256px;"/>
         <h4 style="margin: 0;">JIHO'S EBOOK에 오신 것을 환영합니다.</h4>
     </div>
-
+	</br>
     <hr style="margin: 5px 0;">
 
-    <h2>이용 안내</h2>
+    <h2 style="color:#008B8B">이용 안내</h2>
 
-    <table id="applist">
-        <tr>
-        <td>회원 가입은 필수이며, 대출 신청 후 7일동안 책 구독이 가능합니다.</td>
-		<td>회원 가입 시, 비밀번호는 영문 + 숫자 혼합으로 생성 부탁 드립니다.</td>
-        </tr>
-    </table>
+
 </div>
+<table id="applist">
+	<tr>
+	<td>회원 가입 필수! 대출 신청 후 7일간 구독 가능</td>
+	</tr>
+	<tr>
+	<td>회원 가입 시, 비밀번호는 영문 + 숫자 혼합으로 생성 부탁 드립니다.</td>
+	</tr>
+</table>
 {% endblock content %}
 
 {% block footer %}
