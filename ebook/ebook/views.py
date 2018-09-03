@@ -11,7 +11,8 @@ from django.core.paginator import Paginator, PageNotAnInteger
 from datetime import timedelta, date
 
 from ebook.models import Books, RentHistory
-from ebook.forms import PostSearchForm
+from ebook.forms import PostSearchForm, NaverAPISearchForm
+from ebook.api import api_get_book
 
 # 전체 책 목록뷰
 # 리스트 페이지에서 검색 기능 추가
@@ -140,5 +141,15 @@ def ebook_content(request, pk):
 		content = rent.book.content_image.url
 		return render(request, 'ebook/ebook_content_image.html', {'content': content})
 
-
-
+# 네이버 도서 검색 API 연동
+class NaverSearch(FormView):
+	form_class = NaverAPISearchForm
+	template_name = 'ebook/ebook_api_search.html'
+	def form_valid(self, form):
+		keyword = self.request.POST['keyword'] 
+		books = api_get_book(keyword) # 검색된 단어는 api 연동 함수로 전달 후 리턴 받음
+		context = {}
+		context['form'] = form
+		context['books'] = books # 도서 관련 내용은 모두 해당 dict에 지정
+		
+		return render(self.request, self.template_name, context)

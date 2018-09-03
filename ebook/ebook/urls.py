@@ -12,5 +12,5 @@ urlpatterns = [
 	path('rentlist_check/', views.rent_check, name='list_check'), # /ebook/rentlist_check/
 	path('rentlist/', views.EbookRentLV.as_view(), name='rent_list'), # /ebook/rentlist/
 	path('ebook/<int:pk>/content/', views.ebook_content, name='ebook_content'), # /ebook/1/content/
-
+	path('ebook/booksearch/', views.NaverSearch.as_view(), name='ebook_api_search'),
 ]	

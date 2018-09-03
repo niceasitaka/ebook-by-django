@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}ebook_api_search.html{% endblock %}
+
+{% block content %}
+<div id="content">
+<br><br>
+<form id="form" action="." method="post"> {% csrf_token %}
+	<b>{{ form }}</b>
+	<input type="submit" value="검색" />
+</form>
+<br><br>
+{% if books %}
+	{% for item in books %}
+		<img src="{{ item.image }}" />
+		<p>{{ item.title|safe }} / {{ item.author|safe }}</p>
+		<a href='{{ item.link }}'>자세히 보기</a>
+		<br><br><br>
+	{% endfor %}
+	
+{% endif %}
+</div>
+
+
+{% endblock %}
