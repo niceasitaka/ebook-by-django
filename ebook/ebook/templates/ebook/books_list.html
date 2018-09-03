@@ -33,8 +33,13 @@
     {% endfor %}
 	
 <br/>
+
 <div>
+
+{{ max_index }}
     <span>
+	{% if page_obj.has_other_pages %}
+
         {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}">PreviousPage</a>
         {% endif %}
@@ -45,6 +50,8 @@
             <a href="?page={{ page_obj.next_page_number }}">NextPage</a>
         {% endif %}
     </span>
+	{% endif %}
+
 </div>	
 <br/><br/>
 {% elif search_word %}
