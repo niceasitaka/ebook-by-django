@@ -13,6 +13,7 @@ from datetime import timedelta, date
 from ebook.models import Books, RentHistory
 from ebook.forms import PostSearchForm, NaverAPISearchForm
 from ebook.api import api_get_book
+from utils.slack import slack_notify
 
 # 전체 책 목록뷰
 # 리스트 페이지에서 검색 기능 추가
@@ -49,6 +50,8 @@ class EbookCVText(LoginRequiredMixin, CreateView): # 로그인 필수
 	# POST로 들어온 데이터가 유효하면 CreateView 클래스의 form_valid 메소드 호출
 	def form_valid(self, form):
 		messages.info(self.request, '도서 등록 완료')
+		slack_message = '*도서 등록 완료*'
+		slack_notify(slack_message, '#general', username='jiho')
 		return super(EbookCVText, self).form_valid(form) 
 		# super()에 의해 상위 클래스의 form_valid 메소드의 form.save() 실행됨(DB에 반영 후 success_url 리다이렉트)
 		
@@ -63,6 +66,8 @@ class EbookCVImage(LoginRequiredMixin, CreateView): # 로그인 필수
 	
 	def form_valid(self, form):
 		messages.info(self.request, '도서 등록 완료')
+		slack_message = '*도서 등록 완료*'
+		slack_notify(slack_message, '#general', username='jiho')
 		return super(EbookCVImage, self).form_valid(form) 
 
 # 각 책들의 상세뷰
@@ -82,6 +87,8 @@ def rent(request, pk):
 		# 사용자가 이미 대출했었고 반납되지 않은 책을 선택했을 시,
 		if i.user == request.user and i.rent_status == False:
 			messages.info(request, '{}까지 열람 가능한 동일 도서가 있습니다.'.format(i.rent_end))
+			slack_message = '*{}까지 열람 가능한 동일 도서가 있습니다.*'.format(i.rent_end)
+			slack_notify(slack_message, '#general', username='jiho')
 			return redirect('ebook:list_check')
 	
 	rent_start = date.today()
@@ -89,6 +96,8 @@ def rent(request, pk):
 	db_insert = RentHistory(rent_start=rent_start, rent_end=rent_end, rent_status=False, book_id=pk, user=request.user)
 	db_insert.save()
 	messages.info(request, '대여성공! 열람 가능한 기간은 {}까지 입니다.'.format(rent_end))
+	slack_message = '*대여성공! 열람 가능한 기간은 {}까지 입니다.*'.format(rent_end)
+	slack_notify(slack_message, '#general', username='jiho')
 	return redirect('ebook:list_check')
 
 # 대출 만료 날짜에 따라 반납 여부 결정
