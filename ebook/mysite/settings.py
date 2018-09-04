@@ -130,3 +130,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # 로그인 처리이후 리다이렉트될 URL 설정
 LOGIN_REDIRECT_URL = '/'
+
+SLACK_TOKEN = "xoxb-429824523894-427908557777-Rqm6aejrF3ZkLJyFsNlwbhc1"
+NAVER_CLIENT_ID = "mS4g5rpgZfPVn8PiXz07"
+NAVER_CLIENT_SECRET = "fjXvfNEq3r"

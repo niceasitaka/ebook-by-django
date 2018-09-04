@@ -2,13 +2,12 @@
 # request는 클라이언트의 요청 처리
 # parse는 URL을 분석 후 속성 구분함
 import urllib.request
-
-
 import json
+from mysite import settings
 
 def api_get_book(title):
-	client_id = "mS4g5rpgZfPVn8PiXz07" # 애플리케이션 등록시 발급 받은 값 입력
-	client_secret = "fjXvfNEq3r" # 애플리케이션 등록시 발급 받은 값 입력
+	client_id = settings.NAVER_CLIENT_ID # 애플리케이션 등록시 발급 받은 값 입력
+	client_secret = settings.NAVER_CLIENT_SECRET # 애플리케이션 등록시 발급 받은 값 입력
 	encText = urllib.parse.quote(title) # UTF-8 형식으로 URL 인코딩
 	url = "https://openapi.naver.com/v1/search/book?query=" + encText +"&display=10&sort=count"
 	# URL 요청과 관련된 정보를 담는 역할
