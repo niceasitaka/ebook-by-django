@@ -1,5 +1,5 @@
 from django.contrib import admin
-from ebook.models import *
+from .models import Books, RentHistory
 
 # Register your models here.
 

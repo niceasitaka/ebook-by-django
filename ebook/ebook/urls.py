@@ -1,5 +1,5 @@
 from django.urls import path
-from ebook import views
+from . import views
 
 app_name = 'ebook'
 urlpatterns = [

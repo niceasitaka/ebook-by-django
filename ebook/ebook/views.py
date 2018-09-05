@@ -1,3 +1,5 @@
+from datetime import timedelta, date
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,12 +10,11 @@ from django.urls import reverse_lazy, reverse
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger
 
-from datetime import timedelta, date
-
-from ebook.models import Books, RentHistory
-from ebook.forms import PostSearchForm, NaverAPISearchForm
-from ebook.api import api_get_book
 from utils.slack import slack_notify
+
+from .models import Books, RentHistory
+from .forms import PostSearchForm, NaverAPISearchForm
+from .api import api_get_book
 
 # 전체 책 목록뷰
 # 리스트 페이지에서 검색 기능 추가
