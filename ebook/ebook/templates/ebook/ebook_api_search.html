@@ -15,8 +15,6 @@
 		<img src="{{ item.image }}" />
 		<p>{{ item.title|safe }} / {{ item.author|safe }}</p>
 		<a href='{{ item.link }}'>자세히 보기</a>
-		<form id="form" action="{% url 'ebook:ebook_wish' %}" method="get"> {% csrf_token %}
-		<input type="submit" value="희망도서 신청" />
 		<br><br><br>
 	{% endfor %}
 	

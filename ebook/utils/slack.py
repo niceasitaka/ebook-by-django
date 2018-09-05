@@ -1,5 +1,5 @@
 from slacker import Slacker
-from mysite import settings
+from config import settings
 
 def slack_notify(text=None, channel='#general', username='jiho', attachments=None):
 	token = settings.SLACK_TOKEN

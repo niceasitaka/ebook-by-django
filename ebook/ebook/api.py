@@ -3,7 +3,7 @@
 # parse는 URL을 분석 후 속성 구분함
 import urllib.request
 import json
-from mysite import settings
+from config import settings
 
 def api_get_book(title):
 	client_id = settings.NAVER_CLIENT_ID # 애플리케이션 등록시 발급 받은 값 입력

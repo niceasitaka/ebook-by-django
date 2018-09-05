@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
-from .fields import ThumbnailImageField
 from django.urls import reverse
-
 from django.db import models
+
+from .fields import ThumbnailImageField
 
 class Books(models.Model):
 	title = models.CharField("도서명", max_length = 100)
