@@ -25,11 +25,10 @@ class EbookLV(ListView, FormView):
 	
 	def get_queryset(self):
 		queryset = super(EbookLV, self).get_queryset()
-		
-		q = self.request.GET.get('search_word')
-		if q:
-			return queryset.filter(Q(title__icontains=q)|
-			Q(description__icontains=q)|Q(author__icontains=q)).distinct()
+		schWord = self.request.GET.get('search_word')
+		if schWord:
+			return queryset.filter(Q(title__icontains=schWord)|
+			Q(description__icontains=schWord)|Q(author__icontains=schWord)).distinct()
 		return queryset
 		
 	def get_context_data(self, **kwargs):
