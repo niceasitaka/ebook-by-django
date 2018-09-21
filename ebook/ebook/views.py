@@ -96,6 +96,7 @@ def rent(request, pk):
 	rent_end = date.today() + timedelta(days=7) # 대출 기간은 7일
 	db_insert = RentHistory(rent_start=rent_start, rent_end=rent_end, rent_status=False, book_id=pk, user=request.user)
 	db_insert.save()
+	
 	messages.info(request, '대여성공! 열람 가능한 기간은 {}까지 입니다.'.format(rent_end))
 	slack_message = '*대여성공! 열람 가능한 기간은 {}까지 입니다.*'.format(rent_end)
 	slack_notify(slack_message, '#general', username='jiho')
@@ -108,6 +109,7 @@ def rent(request, pk):
 @login_required
 def rent_check(request):
 	rent = RentHistory.objects.filter(user=request.user)
+	
 	for i in rent:
 		if i.rent_end < date.today():
 			i.rent_status = True
