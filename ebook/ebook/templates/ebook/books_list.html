@@ -11,7 +11,7 @@
 
 <div id="content">
 
-<form id="form" action="." method="post"> {% csrf_token %}
+<form id="form" action="." method="GET"> {% csrf_token %}
 	<b>{{ form }}</b>
 	<input type="submit" value="검색" />
 </form>
@@ -36,7 +36,6 @@
 
 <div>
 
-{{ max_index }}
     <span>
 	{% if page_obj.has_other_pages %}
 

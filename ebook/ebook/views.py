@@ -22,7 +22,21 @@ class EbookLV(ListView, FormView):
 	form_class = PostSearchForm # 폼으로 사용될 클래스 지정
 	model = Books
 	paginate_by = 3 # 페이지에 개체 3개만 표시
+	
+	def get_queryset(self):
+		queryset = super(EbookLV, self).get_queryset()
 		
+		q = self.request.GET.get('search_word')
+		if q:
+			return queryset.filter(Q(title__icontains=q)|
+			Q(description__icontains=q)|Q(author__icontains=q)).distinct()
+		return queryset
+		
+	def get_context_data(self, **kwargs):
+		context = super(EbookLV, self).get_context_data(**kwargs)
+		context['search_word'] = self.request.GET.get('search_word')
+		return context
+'''		
 	def form_valid(self, form):
 		# POST 요청의 search_word의 파라미터 값을 추출해 schWord에 지정, search_word는 PostSearchForm에서 정의한 필드이름
 		schWord = '%s' % self.request.POST['search_word']
@@ -39,7 +53,7 @@ class EbookLV(ListView, FormView):
 		context['object_list'] = post_list
 		
 		return render(self.request, 'ebook/books_list.html', context) # No Redirection	
-		
+'''		
 # 도서 등록뷰
 # 도서가 text 형식일 경우
 class EbookCVText(LoginRequiredMixin, CreateView): # 로그인 필수
