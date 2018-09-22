@@ -23,6 +23,9 @@ class EbookLV(ListView, FormView):
 	model = Books
 	paginate_by = 3 # 페이지에 개체 3개만 표시
 	
+	# 보유도서 검색 시 POST를 굳이 사용할 필요가 없어 GET방식으로 변경
+	# GET 방식으로 요청이 오면 form_valid 사용할 필요 없음
+	# 검색 메소드 구현
 	def get_queryset(self):
 		queryset = super(EbookLV, self).get_queryset()
 		schWord = self.request.GET.get('search_word')
@@ -30,7 +33,8 @@ class EbookLV(ListView, FormView):
 			return queryset.filter(Q(title__icontains=schWord)|
 			Q(description__icontains=schWord)|Q(author__icontains=schWord)).distinct()
 		return queryset
-		
+	
+	# 템플릿에서 검색되지 않는 문구를 표현하기 위한 메소드
 	def get_context_data(self, **kwargs):
 		context = super(EbookLV, self).get_context_data(**kwargs)
 		context['search_word'] = self.request.GET.get('search_word')
@@ -52,7 +56,8 @@ class EbookLV(ListView, FormView):
 		context['object_list'] = post_list
 		
 		return render(self.request, 'ebook/books_list.html', context) # No Redirection	
-'''		
+'''	
+
 # 도서 등록뷰
 # 도서가 text 형식일 경우
 class EbookCVText(LoginRequiredMixin, CreateView): # 로그인 필수
@@ -68,7 +73,7 @@ class EbookCVText(LoginRequiredMixin, CreateView): # 로그인 필수
 		slack_notify(slack_message, '#general', username='jiho')
 		return super(EbookCVText, self).form_valid(form) 
 		# super()에 의해 상위 클래스의 form_valid 메소드의 form.save() 실행됨(DB에 반영 후 success_url 리다이렉트)
-		
+
 # 책 등록뷰
 # 도서가 image(jpg, png 등) 형식일 경우
 # EbookCVText 클래스와 로직 동일
@@ -140,7 +145,7 @@ class EbookRentLV(LoginRequiredMixin, ListView):
 	# ebook_rent_list.html 에 대출했던 사용자, 반납 상태를 고려하여 책 목록을 표시
 	def get_queryset(self):
 		return RentHistory.objects.filter(user=self.request.user, rent_status=False)
-
+	
 # 책 내용 보여주기(책 읽기)
 @login_required
 def ebook_content(request, pk):
