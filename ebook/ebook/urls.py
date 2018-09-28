@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+# config 의 urls 에서 namespace 를 사용하려면 app_name 지정 필수
 app_name = 'ebook'
 urlpatterns = [
 	path('', views.EbookLV.as_view(), name='index'), # /ebook/
