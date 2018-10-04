@@ -6,15 +6,19 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.contrib import messages
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger
+
+from rest_framework import generics
+from rest_framework import viewsets, permissions
 
 from utils.slack import slack_notify
 
 from .models import Books, RentHistory
 from .forms import PostSearchForm, NaverAPISearchForm
 from .api import api_get_book
+from .serializers import EbookSerializer
 
 # 전체 책 목록뷰
 # 리스트 페이지에서 검색 기능 추가
@@ -183,3 +187,10 @@ class NaverSearch(FormView):
 		context['books'] = books # 도서 관련 내용은 모두 해당 dict에 지정
 		
 		return render(self.request, self.template_name, context)
+
+# rest api 적용
+class EbookViewSet(viewsets.ModelViewSet):
+	queryset = Books.objects.all()
+	serializer_class = EbookSerializer
+	# 로그인한 사용자만 create 가능
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

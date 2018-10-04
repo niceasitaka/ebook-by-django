@@ -1,5 +1,11 @@
-from django.urls import path
+from django.urls import path, include
+
+from rest_framework.routers import DefaultRouter
+
 from . import views
+
+router = DefaultRouter()
+router.register(r'ebook', views.EbookViewSet)
 
 # config 의 urls 에서 namespace 를 사용하려면 app_name 지정 필수
 app_name = 'ebook'
@@ -15,4 +21,5 @@ urlpatterns = [
 	path('ebook/<int:pk>/content/', views.ebook_content, name='ebook_content'), # /ebook/1/content/
 	path('booksearch/', views.NaverSearch.as_view(), name='ebook_api_search'), #/ebook/booksearch/
 
+	path('api/', include(router.urls)), #/ebook/api/
 ]	
