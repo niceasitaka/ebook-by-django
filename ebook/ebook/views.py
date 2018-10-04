@@ -10,7 +10,6 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger
 
-from rest_framework import generics
 from rest_framework import viewsets, permissions
 
 from utils.slack import slack_notify
@@ -38,9 +37,24 @@ class EbookLV(ListView, FormView):
 			Q(description__icontains=schWord)|Q(author__icontains=schWord)).distinct()
 		return queryset
 	
-	# 템플릿에서 검색되지 않는 문구를 표현하기 위한 메소드
 	def get_context_data(self, **kwargs):
 		context = super(EbookLV, self).get_context_data(**kwargs)
+		paginator = context['paginator']
+		page_numbers_range = 5 # 표시되는 인덱스 숫자 수 표시제한
+		max_index = len(paginator.page_range)
+
+		page = self.request.GET.get('page')
+		current_page = int(page) if page else 1 # page 가 0일 경우, 1로 할당
+
+		start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+		end_index = start_index + page_numbers_range		
+
+		if end_index >= max_index:
+			end_index = max_index
+
+		page_range = paginator.page_range[start_index:end_index]
+		context['page_range'] = page_range
+		# 템플릿에서 검색되지 않는 문구를 표현하기 위함
 		context['search_word'] = self.request.GET.get('search_word')
 		return context
 '''		
