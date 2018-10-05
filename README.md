@@ -11,3 +11,6 @@
 - 아래 내용을 바탕으로 구현
   - 파이썬 웹 프로그래밍 실전편
   - https://wayhome25.github.io/ (초보몽키의 개발공부로그)
+  
+- pythonanywhere 주소
+  - http://niceasitaka.pythonanywhere.com/
