@@ -18,6 +18,7 @@ from .models import Books, RentHistory
 from .forms import PostSearchForm, NaverAPISearchForm
 from .api import api_get_book
 from .serializers import EbookSerializer
+from config.settings import MEDIA_ROOT
 
 # 전체 책 목록뷰
 # 리스트 페이지에서 검색 기능 추가
@@ -173,7 +174,8 @@ def ebook_content(request, pk):
 		# open 함수에서 arg를 받을 때는 str 형으로 변환 필요
 		file_path = str(rent.book.content_text)
 		# close() 함수를 쓰지 않기 위해 컨텍스트 매니저 사용 / 한 쌍으로 함께 실행되어야 하는 연결된 수행 코드를 한 번에 처리
-		with open('C:/python/django_test/ebook/ebook/media/' + file_path) as book:
+		#with open('C:/python/django_test/ebook/ebook/media/' + file_path) as book:
+		with open(MEDIA_ROOT + '/' + file_path) as book:
 			content = book.read()
 		
 		context = {}
