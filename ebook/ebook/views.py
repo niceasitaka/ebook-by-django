@@ -159,7 +159,6 @@ def rent_check(request):
 class EbookRentLV(LoginRequiredMixin, ListView):
 	model = RentHistory
 	template_name = 'ebook/ebook_rent_list.html'
-	paginate_by = 5
 
 	# ebook_rent_list.html 에 대출했던 사용자, 반납 상태를 고려하여 책 목록을 표시
 	def get_queryset(self):
@@ -175,7 +174,7 @@ def ebook_content(request, pk):
 		file_path = str(rent.book.content_text)
 		# close() 함수를 쓰지 않기 위해 컨텍스트 매니저 사용 / 한 쌍으로 함께 실행되어야 하는 연결된 수행 코드를 한 번에 처리
 		#with open('C:/python/django_test/ebook/ebook/media/' + file_path) as book:
-		with open(MEDIA_ROOT + '/' + file_path) as book:
+		with open(MEDIA_ROOT + '/' + file_path, encoding='utf8') as book:
 			content = book.read()
 		
 		context = {}
