@@ -10,7 +10,11 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger
 
+# 아래 import 한 것은 각각 숫자, 날짜, 문자열에 대한 필터링 제공 > 따로 클래스를 만들어 필터 관련 속성 지정 가능
+#from django_filters import NumberFilter, DateTimeFilter, AllValuesFilter
+
 from rest_framework import viewsets, permissions
+from rest_framework import filters
 
 from utils.slack import slack_notify
 
@@ -209,3 +213,6 @@ class EbookViewSet(viewsets.ModelViewSet):
 	serializer_class = EbookSerializer
 	# 로그인한 사용자만 create 가능
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+	filter_fields = ('title',) # 필터할 필드 설정
+	search_fields = ('^title',) # 검색할 필드 설정(검색 문자 포함 모든 결과표시)
+	ordering_fields = ('title',) # 정렬 기준이될 필드 설정
