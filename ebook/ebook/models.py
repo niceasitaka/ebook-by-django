@@ -10,11 +10,11 @@ class Books(models.Model):
 	author = models.CharField("저자", max_length = 50)
 	description = models.CharField("책요약/소개", max_length=300, blank=True)
 	# 커스텀 썸네일필드 사용, 파이썬 웹 프로그래밍 책 참고, ebook/fields.py 에 정의
-	cover_image = ThumbnailImageField("도서 겉표지", upload_to='photo/%Y/%m', null=True)	
+	cover_image = ThumbnailImageField("도서 겉표지", upload_to='photo/%Y/%m', blank=True)	
 	# 텍스트 파일 형식의 도서
-	content_text = models.FileField("텍스트형식 도서", upload_to='content/%Y/%m', null=True)
+	content_text = models.FileField("텍스트형식 도서", upload_to='content/%Y/%m', blank=True)
 	# 이미지 파일 형식의 도서
-	content_image = models.ImageField("이미지형식 도서",upload_to='content/%Y/%m', null=True)
+	content_image = models.ImageField("이미지형식 도서",upload_to='content/%Y/%m', blank=True)
 	
 	def __str__(self):
 		return self.title

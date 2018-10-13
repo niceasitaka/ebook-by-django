@@ -97,7 +97,7 @@ class EbookCVText(LoginRequiredMixin, CreateView): # 로그인 필수
 		return super(EbookCVText, self).form_valid(form) 
 		# super()에 의해 상위 클래스의 form_valid 메소드의 form.save() 실행됨(DB에 반영 후 success_url 리다이렉트)
 
-# 책 등록뷰
+# 도서 등록뷰
 # 도서가 image(jpg, png 등) 형식일 경우
 # EbookCVText 클래스와 로직 동일
 class EbookCVImage(LoginRequiredMixin, CreateView): # 로그인 필수
