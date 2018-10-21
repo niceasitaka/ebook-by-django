@@ -8,9 +8,17 @@
 - ebook 등록 가능
   - 이미지 또는 텍스트 형식의 도서 업로드 가능
   - 등록된 형식에 따라 브라우저에 보여질 수 있도록 구현
+- REST API 적용
+  - API root : /ebook/api/
+  - E북 리스트 : /ebook/api/ebook/    
+  - 보유도서 검색 : /ebook/api/ebook/?search=
+ 
 - 아래 내용을 바탕으로 구현
   - 파이썬 웹 프로그래밍 실전편
   - https://wayhome25.github.io/ (초보몽키의 개발공부로그)
   
-- pythonanywhere 주소
+- pythonanywhere 배포버전 웹 주소
   - http://niceasitaka.pythonanywhere.com/
+  
+- AWS 배포버전 웹 주소
+  - http://13.59.79.195/
