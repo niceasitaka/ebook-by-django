@@ -34,7 +34,7 @@ Pillow==5.2.0
 protobuf==3.6.0
 pyasn1==0.4.4
 pycparser==2.18
-Pygments==2.2.0
+Pygments==2.7.4
 pyOpenSSL==18.0.0
 pytz==2018.5
 PyYAML==3.13
